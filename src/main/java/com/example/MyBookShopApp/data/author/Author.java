@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.data.author;
 
 import com.example.MyBookShopApp.data.book.Book;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")

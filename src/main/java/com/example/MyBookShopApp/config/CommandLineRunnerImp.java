@@ -55,9 +55,9 @@ public class CommandLineRunnerImp implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Optional<Book> book1 = bookRepository.findById(1);
-        Optional<Book> book2 = bookRepository.findById(2);
-        Optional<Author> author1 = authorRepository.findById(1);
+//        Optional<Book> book1 = bookRepository.findById(1);
+//        Optional<Book> book2 = bookRepository.findById(2);
+//        Optional<Author> author1 = authorRepository.findById(1);
 
 //        Logger.getLogger(CommandLineRunnerImp.class.getSimpleName())
 //                .info(book1.get().toString());
@@ -67,9 +67,9 @@ public class CommandLineRunnerImp implements CommandLineRunner {
 //        SessionFactory sessionFactory = emf.unwrap(SessionFactory.class);
 //        Session session = sessionFactory.getCurrentSession();
 //        Session session = sessionFactory.openSession();
-        Session session = em.unwrap(Session.class);
-        Transaction tx = session.beginTransaction();
-        List<UserEntity> users  = session.createQuery("from UserEntity").getResultList();
+//        Session session = em.unwrap(Session.class);
+//        Transaction tx = session.beginTransaction();
+//        List<UserEntity> users  = session.createQuery("from UserEntity").getResultList();
 
 //        System.out.println(author1.get());
 
