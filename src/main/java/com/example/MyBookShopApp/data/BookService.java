@@ -1,6 +1,9 @@
 package com.example.MyBookShopApp.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -49,4 +52,14 @@ public class BookService {
         return bookRepository.getBestsellers();
     }
 
+    /**
+     * метод возращает книги обьектом Page
+     * @param offset номер страницы
+     * @param limit кол-во книг
+     * @return
+     */
+    public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit){
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findAll(nextPage);
+    }
 }
