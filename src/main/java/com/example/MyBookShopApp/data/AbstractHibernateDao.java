@@ -6,25 +6,25 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManagerFactory;
 
-@Repository     // для котейнера spring то что класс bin
+@Repository
 public abstract class AbstractHibernateDao<T> {
-    // <T> - generic тип потом поменяем на конкретные типы
-    @Autowired  // injecttion
+
+    @Autowired
     EntityManagerFactory entityManagerFactory;
 
-    private Class<T> clazz;     // поле с типом Class genetic
+    private Class<T> clazz;
 
-    public void setClazz(Class<T> clazz) { // метод сеттер для clazz
+
+    public void setClazz(Class<T> clazz) {
         this.clazz = clazz;
     }
 
-    public T findOne(Long id) { // метод который ищет generic T
-        // тоесть ищет какой-то тип сущности в БД
-        return getSession().find(clazz, id);
+    public T findOne(Long id){
+        return getSession().find(clazz,id);
     }
 
+
     public Session getSession(){
-        // метод получить экземпляр обьекта session
         return entityManagerFactory.createEntityManager().unwrap(Session.class);
     }
 }

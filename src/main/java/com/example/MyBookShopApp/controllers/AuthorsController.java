@@ -1,20 +1,20 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.data.author.Author;
-import com.example.MyBookShopApp.data.services.AuthorService;
+import com.example.MyBookShopApp.data.Author;
+import com.example.MyBookShopApp.data.AuthorService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
 
 @Controller
-//@RequestMapping("/authors")
-@Api(description = "authors data")  // @Api чтобы класс попал в докуметаци
+@Api(description = "authors data")
 public class AuthorsController {
 
     private final AuthorService authorService;
@@ -29,14 +29,15 @@ public class AuthorsController {
         return authorService.getAuthorsMap();
     }
 
-    @GetMapping("")
+    @GetMapping("/authors")
     public String authorsPage(){
         return "/authors/index";
     }
 
-    // добавим этот метод чтобы он попал в документацию API
+    @ApiOperation("method to get map of authors")
     @GetMapping("/api/authors")
-    public Map<String,List<Author>> authors(){
+    @ResponseBody
+    public Map<String, List<Author>> authors(){
         return authorService.getAuthorsMap();
     }
 }
