@@ -15,7 +15,8 @@
                             <form class="form form_search" action="#" method="post" data-searchlimit="20">
                                 <input class="search-input" id="query" name="query" type="text"
                                        th:placeholder="#{${messageTemplate}(${#dates.format(serverTime,'hh:mm')},#{searchbar.placeholderTextPart1},${placeholderTextPart2})}"
-                                       placeholder="Search over 30 million book titles"/>
+                                       placeholder="Search over 30 million book titles"
+                                       th:field="*{example}" value=""/>
                                 <button class="search-button" type="submit" name="search" id="search">Поиск
                                 </button>
                             </form>
