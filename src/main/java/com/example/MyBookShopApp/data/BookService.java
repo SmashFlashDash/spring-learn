@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.net.ContentHandler;
 import java.util.List;
 
 @Service
@@ -56,5 +58,13 @@ public class BookService {
     public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of(offset,limit);
         return bookRepository.findBookByTitleContaining(searchWord,nextPage);
+    }
+
+    public Page<Book> getPageOfNewBooks(Integer offset, Integer limit) {
+        return bookRepository.findAll(PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "pubDate")));
+    }
+
+    public Page<Book> getPageOfPopularBooks(Integer offset, Integer limit) {
+        return bookRepository.findBookByIsBestsellerEqualsOrderByPubDate(1, PageRequest.of(offset, limit));
     }
 }

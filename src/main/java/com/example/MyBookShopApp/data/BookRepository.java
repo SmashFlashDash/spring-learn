@@ -31,4 +31,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     List<Book> getBooksWithMaxDiscount();
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
+
+    Page<Book> findBookByIsBestsellerEqualsOrderByPubDate(Integer num, Pageable nextPage);
 }
