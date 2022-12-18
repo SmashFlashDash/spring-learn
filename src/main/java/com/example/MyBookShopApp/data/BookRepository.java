@@ -7,16 +7,16 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface BookRepository extends JpaRepository<Book,Integer> {
+public interface BookRepository extends JpaRepository<Book, Integer> {
 
     List<Book> findBooksByAuthor_FirstName(String name);
 
     @Query("from Book")
     List<Book> customFindAllBooks();
 
-    //NEW BOOK REST REPOSITORY
+    //NEW BOOK REST REPOSITORY COMMANDS
 
-    List<Book> findBooksByAuthorFirstNameContaining(String authorsFirstName);
+    List<Book> findBooksByAuthorFirstNameContaining(String authorFirstName);
 
     List<Book> findBooksByTitleContaining(String bookTitle);
 
@@ -27,8 +27,8 @@ public interface BookRepository extends JpaRepository<Book,Integer> {
     @Query("from Book where isBestseller=1")
     List<Book> getBestsellers();
 
-    @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books",nativeQuery = true)
+    @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books)", nativeQuery = true)
     List<Book> getBooksWithMaxDiscount();
 
-    Page<Book> findBooksByTitleContaining(String bookTitle, Pageable nextPage);
+    Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
 }

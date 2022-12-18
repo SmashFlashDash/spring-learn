@@ -1,16 +1,15 @@
 package com.example.MyBookShopApp.data;
 
-import io.swagger.models.auth.In;
-
 import java.util.List;
 
 public class BooksPageDto {
+
     private Integer count;
     private List<Book> books;
 
-    public BooksPageDto(List<Book> content) {
-        this.books = content;
-        this.count = content.size();
+    public BooksPageDto(List<Book> books) {
+        this.books = books;
+        this.count = books.size();
     }
 
     public Integer getCount() {

@@ -14,7 +14,6 @@ public abstract class AbstractHibernateDao<T> {
 
     private Class<T> clazz;
 
-
     public void setClazz(Class<T> clazz) {
         this.clazz = clazz;
     }
@@ -22,7 +21,6 @@ public abstract class AbstractHibernateDao<T> {
     public T findOne(Long id){
         return getSession().find(clazz,id);
     }
-
 
     public Session getSession(){
         return entityManagerFactory.createEntityManager().unwrap(Session.class);

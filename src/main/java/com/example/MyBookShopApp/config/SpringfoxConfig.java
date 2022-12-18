@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class SpringfoxConfig {
 
     @Bean
-    public Docket docket(){
+    public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
@@ -31,7 +31,7 @@ public class SpringfoxConfig {
                 "API for bookstore",
                 "1.0",
                 "http://www.termsofservice.org",
-                new Contact("API owner", "http://www.ownersite.com","owner@rmailer.org"),
+                new Contact("API owner","http://www.ownersite.com","owner@rmailer.org"),
                 "api_license",
                 "http://www.license.edu.org",
                 new ArrayList<>()

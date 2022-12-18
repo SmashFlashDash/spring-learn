@@ -4,8 +4,6 @@ import com.example.MyBookShopApp.data.BookRepository;
 import com.example.MyBookShopApp.data.TestEntity;
 import com.example.MyBookShopApp.data.TestEntityCrudRepository;
 import com.example.MyBookShopApp.data.TestEntityDao;
-import org.aspectj.weaver.ast.Test;
-import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.persistence.EntityManagerFactory;
 import java.util.logging.Logger;
 
-@Configuration
+//@Configuration
 public class CommandLineRunnerImpl implements CommandLineRunner {
 
     TestEntityCrudRepository testEntityCrudRepository;
@@ -35,46 +33,43 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         }
 
         TestEntity readTestEntity = readTestEntityById(3L);
-        if (readTestEntity != null) {
-            Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName()).info("read " + readTestEntity.toString());
-        } else {
+        if (readTestEntity != null){
+            Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName()).info("read " +readTestEntity.toString());
+        }else {
             throw new NullPointerException();
         }
 
-        TestEntity updateTestEntity = updateTestEntityById(5L);
-        if (updateTestEntity != null) {
-            Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName()).info("update " + readTestEntity.toString());
-        } else {
+        TestEntity updatedTestEntity = updateTestEntityById(5L);
+        if (updatedTestEntity != null){
+            Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName()).info("update "+updatedTestEntity.toString());
+        }else {
             throw new NullPointerException();
         }
 
-        deleteTestEntityById(4L);
+        deleteTesEntityById(4L);
 
-        Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName()).info(bookRepository.findBooksByAuthor_FirstName("Jelene Hopfner").toString());
+        Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName()).info(bookRepository.findBooksByAuthor_FirstName("Jelene").toString());
         Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName()).info(bookRepository.customFindAllBooks().toString());
-
     }
 
-    private void deleteTestEntityById(Long id) {
+    private void deleteTesEntityById(Long id) {
         TestEntity testEntity = testEntityCrudRepository.findById(id).get();
         testEntityCrudRepository.delete(testEntity);
     }
 
     private TestEntity updateTestEntityById(Long id) {
-        TestEntity testEntity = testEntityCrudRepository.findById(id).get();
-        testEntity.setData("NEW DATA");
-        testEntityCrudRepository.save(testEntity);
-        return testEntity;
+       TestEntity testEntity = testEntityCrudRepository.findById(id).get();
+       testEntity.setData("NEW DATA");
+       testEntityCrudRepository.save(testEntity);
+       return testEntity;
     }
-
 
     private TestEntity readTestEntityById(Long id) {
         return testEntityCrudRepository.findById(id).get();
     }
 
-
     private void createTestEntity(TestEntity entity) {
-        entity.setData(entity.getClass().getSimpleName() + entity.hashCode());
+        entity.setData(entity.getClass().getSimpleName()+entity.hashCode());
         testEntityCrudRepository.save(entity);
     }
 }

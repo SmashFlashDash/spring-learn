@@ -37,7 +37,7 @@ public class AuthorsController {
     @ApiOperation("method to get map of authors")
     @GetMapping("/api/authors")
     @ResponseBody
-    public Map<String, List<Author>> authors(){
+    public Map<String,List<Author>> authors(){
         return authorService.getAuthorsMap();
     }
 }

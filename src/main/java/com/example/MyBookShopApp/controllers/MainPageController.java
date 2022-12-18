@@ -23,51 +23,46 @@ public class MainPageController {
     }
 
     @ModelAttribute("recommendedBooks")
-    public List<Book> recommendedBooks(){
-        return bookService.getPageOfRecommendedBooks(0, 6)
-                .getContent(); // чтобы вернуть обьекты из Page метод getContent()
+    public List<Book> recommendedBooks() {
+        return bookService.getPageOfRecommendedBooks(0, 6).getContent();
     }
 
     @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto(){
-        // метод возвращает пустой обьект
+    public SearchWordDto searchWordDto() {
         return new SearchWordDto();
     }
 
     @ModelAttribute("searchResults")
-    public List<Book> searchResults(){
+    public List<Book> searchResults() {
         return new ArrayList<>();
     }
 
     @GetMapping("/")
-    public String mainPage(Model model){
+    public String mainPage() {
         return "index";
     }
 
     @GetMapping("/books/recommended")
     @ResponseBody
     public BooksPageDto getBooksPage(@RequestParam("offset") Integer offset,
-                                     @RequestParam("limit") Integer limit){
+                                     @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
     }
 
-    @GetMapping(value = {"/search", "/search/{searchMod}"})
-    // в качесте EndPoint обрабатывает два адреса первый /search, второй /search/параметрПоиска
-    // возвращает не исписок книг а имя шаблона, и переводит нас на страницу
-    // т.к. найденные книги складываются в атрибут модели и thymeleaf обрабатывает список
+    @GetMapping(value = {"/search", "/search/{searchWord}"})
     public String getSearchResults(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
-                                   Model model){
-        model.addAttribute("searchWord", searchWordDto);    // закидываем в модель обьект
-        model.addAttribute("searchResults", bookService.getPageOfSeachResultBooks(searchWordDto.getExample(), 0, 20).getContent());
+                                   Model model) {
+        model.addAttribute("searchWordDto", searchWordDto);
+        model.addAttribute("searchResults",
+                bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5).getContent());
         return "/search/index";
     }
 
     @GetMapping("/search/page/{searchWord}")
-    @ResponseBody   // т.к. возвращаем не имя шаблона а список книг
-    public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,   // параметры такиеже как в
-                                          @RequestParam("limit") Integer limit,     // @GetMapping("/books/recommended")
-                                          @PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto){
-                                        // обьект searchWordDto с поисковым словом
-        return new BooksPageDto(bookService.getPageOfSeachResultBooks(searchWordDto.getExample(), offset, limit).getContent());
+    @ResponseBody
+    public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
+                                          @RequestParam("limit") Integer limit,
+                                          @PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto) {
+        return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
     }
 }

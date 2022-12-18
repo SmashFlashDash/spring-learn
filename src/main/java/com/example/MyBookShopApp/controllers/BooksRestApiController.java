@@ -20,7 +20,6 @@ public class BooksRestApiController {
 
     private final BookService bookService;
 
-
     @Autowired
     public BooksRestApiController(BookService bookService) {
         this.bookService = bookService;
@@ -28,19 +27,19 @@ public class BooksRestApiController {
 
     @GetMapping("/books/by-author")
     @ApiOperation("operation to get book list of bookshop by passed author first name")
-    public ResponseEntity<List<Book>> booksByAuthor(@RequestParam("author")String authorName){
+    public ResponseEntity<List<Book>> booksByAuthor(@RequestParam("author") String authorName){
         return ResponseEntity.ok(bookService.getBooksByAuthor(authorName));
     }
 
     @GetMapping("/books/by-title")
-    @ApiOperation("get books by title")
-    public ResponseEntity<List<Book>> booksByTitle(@RequestParam("title")String title){
+    @ApiOperation("get books by book title")
+    public ResponseEntity<List<Book>> booksByTitle(@RequestParam("title") String title){
         return ResponseEntity.ok(bookService.getBooksByTitle(title));
     }
 
     @GetMapping("/books/by-price-range")
-    @ApiOperation("get books by price range from min price to max price")
-    public ResponseEntity<List<Book>> priceRangeBookss(@RequestParam("min")Integer min, @RequestParam("max")Integer max){
+    @ApiOperation("get book by price range from min price to max price")
+    public ResponseEntity<List<Book>> priceRangeBooks(@RequestParam("min") Integer min, @RequestParam("max") Integer max){
         return ResponseEntity.ok(bookService.getBooksWithPriceBetween(min, max));
     }
 
@@ -50,8 +49,8 @@ public class BooksRestApiController {
         return ResponseEntity.ok(bookService.getBooksWithMaxPrice());
     }
 
-    @GetMapping("/books/bestsellers")
-    @ApiOperation("get bestseller book (which is_bestseller = 1)")
+    @GetMapping("/books/bestsellsers")
+    @ApiOperation("get bestseller books (which is_bestseller = 1)")
     public ResponseEntity<List<Book>> bestSellerBooks(){
         return ResponseEntity.ok(bookService.getBestsellers());
     }
