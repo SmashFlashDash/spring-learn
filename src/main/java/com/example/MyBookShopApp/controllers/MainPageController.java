@@ -68,7 +68,7 @@ public class MainPageController {
         return new BooksPageDto(bookService.getPageOfPopularBooks(offset, limit).getContent());
     }
 
-
+    // Страница search
     @GetMapping(value = {"/search", "/search/{searchWord}"})
     public String getSearchResults(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
                                    Model model) {
@@ -84,4 +84,30 @@ public class MainPageController {
                                           @PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto) {
         return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
     }
+
+    // Страница popular
+    @GetMapping("/books/popular/index")
+    public String getPopularBooks(){
+        return "/books/popular";
+    }
+
+    // Страница recent
+    @GetMapping("/books/recent/index")
+    public String getNewBooks(){
+        return "/books/recent";
+    }
+
+    // Страница genres
+    @GetMapping("/genres/index")
+    public String getGenres(){
+        return "/genres/index";
+    }
+
+    // Страница authors
+    @GetMapping("/authors/index")
+    public String getAuthors(){
+        return "/authors/index";
+    }
+
+
 }
