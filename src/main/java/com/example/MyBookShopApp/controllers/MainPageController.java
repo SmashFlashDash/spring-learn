@@ -49,19 +49,19 @@ public class MainPageController {
     public String mainPage() {
         return "index";
     }
-    @GetMapping("/books/recommended")
+    @GetMapping("/books/recommended/page")
     @ResponseBody
     public BooksPageDto getRecommendedBooksPage(@RequestParam("offset") Integer offset,
                                                 @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
     }
-    @GetMapping("/books/recent")
+    @GetMapping("/books/recent/page")
     @ResponseBody
     public BooksPageDto getNewBooksPage(@RequestParam("offset") Integer offset,
                                         @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getPageOfNewBooks(offset, limit).getContent());
     }
-    @GetMapping("/books/popular")
+    @GetMapping("/books/popular/page")
     @ResponseBody
     public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
                                             @RequestParam("limit") Integer limit){
@@ -86,26 +86,28 @@ public class MainPageController {
     }
 
     // Страница popular
-    @GetMapping("/books/popular/index")
-    public String getPopularBooks(){
+    @GetMapping("/books/popular")
+    public String getPopularBooks(Model model){
+        model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 10).getContent());
         return "/books/popular";
     }
 
     // Страница recent
-    @GetMapping("/books/recent/index")
-    public String getNewBooks(){
+    @GetMapping("/books/recent")
+    public String getNewBooks(Model model){
+        model.addAttribute("newBooks", bookService.getPageOfNewBooks(0, 10).getContent());
         return "/books/recent";
     }
 
     // Страница genres
-    @GetMapping("/genres/index")
-    public String getGenres(){
+    @GetMapping("/genres")
+    public String getGenres(Model model){
         return "/genres/index";
     }
 
     // Страница authors
-    @GetMapping("/authors/index")
-    public String getAuthors(){
+    @GetMapping("/authors")
+    public String getAuthors(Model model){
         return "/authors/index";
     }
 
