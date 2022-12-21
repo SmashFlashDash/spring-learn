@@ -15,32 +15,27 @@ import java.util.ArrayList;
 
 @Configuration
 public class SpringfoxConfig {
+
     @Bean
-    public Docket docket(){   // бин от springfox в котором натсраиваются
-        // параметры генерируемой документации
-        return new Docket(DocumentationType.SWAGGER_2)  // тип докментации
-                .select() // select чтобы выбрать API селектор билдер - обьект
-                // который строит документацию
+    public Docket docket() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
-                // документировать только классы которые аннотированы @Api
-                .paths(PathSelectors.ant("/api/*"))
-                // документирует только методы в EndPoint которые есть приствка Api
-                .build()   // завершает построение документации
-                .apiInfo(apiInfo());    // добавим класс apiInfo()
+                .paths(PathSelectors.any())
+                .build()
+                .apiInfo(apiInfo());
     }
 
     public ApiInfo apiInfo(){
         return new ApiInfo(
-                "Bookshop API",         // заголово API
-                "API for bookstore",   // описание API
-                "1.0",  // версия
-                "http://www.termsofservice.org",  // url для условий пользования
-                // у нас нет напишем ссылку
-                new Contact("API owner", "http://www.ownersite.com", "owner@mail.com"),
-                // контактные данные обьектом Contact, имя, url на сайт, адрес почты
-                "api_license", // название лицензии
-                "http://www.license.edu.org",  // лицензия
-                new ArrayList<>()  // расширения вендора у нас нет передадим пустой лист
+                "Bookshop API",
+                "API for bookstore",
+                "1.0",
+                "http://www.termsofservice.org",
+                new Contact("API owner","http://www.ownersite.com","owner@rmailer.org"),
+                "api_license",
+                "http://www.license.edu.org",
+                new ArrayList<>()
         );
     }
 }
