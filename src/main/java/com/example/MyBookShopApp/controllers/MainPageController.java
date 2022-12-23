@@ -31,10 +31,10 @@ public class MainPageController {
         // TODO: правильно ли туда short передавать
         return bookService.getPageOfPopularBooks(0, 6).getContent();
     }
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
+//    @ModelAttribute("searchWordDto")
+//    public SearchWordDto searchWordDto() {
+//        return new SearchWordDto();
+//    }
     @ModelAttribute("searchResults")
     public List<Book> searchResults() {
         return new ArrayList<>();
@@ -53,24 +53,7 @@ public class MainPageController {
         return "index";
     }
 
-//    @GetMapping("/books/recommended/page")
-//    @ResponseBody
-//    public BooksPageDto getRecommendedBooksPage(@RequestParam("offset") Integer offset,
-//                                                @RequestParam("limit") Integer limit) {
-//        return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
-//    }
-//    @GetMapping("/books/recent/page")
-//    @ResponseBody
-//    public BooksPageDto getNewBooksPage(@RequestParam("offset") Integer offset,
-//                                        @RequestParam("limit") Integer limit) {
-//        return new BooksPageDto(bookService.getPageOfNewBooks(offset, limit).getContent());
-//    }
-//    @GetMapping("/books/popular/page")
-//    @ResponseBody
-//    public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
-//                                            @RequestParam("limit") Integer limit){
-//        return new BooksPageDto(bookService.getPageOfPopularBooks(offset, limit).getContent());
-//    }
+//
 //
 //    // Страница search
 //    @GetMapping(value = {"/search", "/search/{searchWord}"})
