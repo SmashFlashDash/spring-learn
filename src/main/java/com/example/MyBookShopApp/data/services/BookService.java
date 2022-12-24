@@ -10,6 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import java.net.ContentHandler;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -57,5 +59,15 @@ public class BookService {
     }
     public Page<Book> getPageOfPopularBooks(Integer offset, Integer limit) {
         return bookRepository.findBookByIsBestsellerEqualsOrderByPubDateDesc((short) 1, PageRequest.of(offset, limit));
+    }
+
+    public Page<Book> getPageOfNewBooksDateFrom(Date from, Integer offset, Integer limit) {
+        return bookRepository.findAllByPubDateAfterOrderByPubDateDesc(from, PageRequest.of(offset, limit));
+    }
+    public Page<Book> getPageOfNewBooksDateTo(Date to, Integer offset, Integer limit) {
+        return bookRepository.findAllByPubDateBeforeOrderByPubDateDesc(to, PageRequest.of(offset, limit));
+    }
+    public Page<Book> getPageOfNewBooksDateBetween(Date from, Date to, Integer offset, Integer limit) {
+        return bookRepository.findAllByPubDateBetweenOrderByPubDateDesc(from, to, PageRequest.of(offset, limit));
     }
 }

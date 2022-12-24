@@ -5,7 +5,8 @@ import com.example.MyBookShopApp.data.search.SearchWordDto;
 import com.example.MyBookShopApp.data.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,10 @@ public class MainPageController {
     public MainPageController(BookService bookService) {
         this.bookService = bookService;
     }
-
+    @ModelAttribute("active")
+    public String activePage() {
+        return "Main";
+    }
     @ModelAttribute("recommendedBooks")
     public List<Book> recommendedBooks() {
         return bookService.getPageOfRecommendedBooks(0, 6).getContent();
@@ -31,30 +35,23 @@ public class MainPageController {
         // TODO: правильно ли туда short передавать
         return bookService.getPageOfPopularBooks(0, 6).getContent();
     }
-//    @ModelAttribute("searchWordDto")
-//    public SearchWordDto searchWordDto() {
-//        return new SearchWordDto();
-//    }
+    @ModelAttribute("searchWordDto")
+    public SearchWordDto searchWordDto() {
+        return new SearchWordDto();
+    }
     @ModelAttribute("searchResults")
     public List<Book> searchResults() {
         return new ArrayList<>();
     }
-//    @ModelAttribute("searchWordDto")
-//    public SearchWordDto searchWordDto() {
-//        return new SearchWordDto();
-//    }
-//    @ModelAttribute("searchResults")
-//    public List<Book> searchResults() {
-//        return new ArrayList<>();
-//    }
+
 
     @GetMapping("/")
     public String mainPage() {
         return "index";
     }
 
-//
-//
+
+
 //    // Страница search
 //    @GetMapping(value = {"/search", "/search/{searchWord}"})
 //    public String getSearchResults(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
@@ -71,18 +68,7 @@ public class MainPageController {
 //                                          @PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto) {
 //        return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
 //    }
-//    // Страница popular
-//    @GetMapping("/books/popular")
-//    public String getPopularBooks(Model model){
-//        model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 10).getContent());
-//        return "/books/popular";
-//    }
-//    // Страница recent
-//    @GetMapping("/books/recent")
-//    public String getNewBooks(Model model){
-//        model.addAttribute("newBooks", bookService.getPageOfNewBooks(0, 10).getContent());
-//        return "/books/recent";
-//    }
+
 //    // Страница genres
 //    @GetMapping("/genres")
 //    public String getGenres(Model model){
