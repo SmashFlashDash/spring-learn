@@ -2,18 +2,10 @@ package com.example.MyBookShopApp.config;
 
 import com.example.MyBookShopApp.data.TestEntity;
 import com.example.MyBookShopApp.data.TestEntityCrudRepository;
-import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.author.AuthorRepository;
-import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.book.BookRepository;
-import com.example.MyBookShopApp.data.services.AuthorService;
-import com.example.MyBookShopApp.data.services.BookService;
-import com.example.MyBookShopApp.data.user.UserEntity;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.engine.spi.SessionFactoryImplementor;
-import org.hibernate.service.ServiceRegistry;
+import com.example.MyBookShopApp.data.author.AuthorService;
+import com.example.MyBookShopApp.data.book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Logger;
 
 @Configuration
 public class CommandLineRunnerImp implements CommandLineRunner {

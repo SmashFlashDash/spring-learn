@@ -1,4 +1,4 @@
-package com.example.MyBookShopApp.data.services;
+package com.example.MyBookShopApp.data.author;
 
 import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.author.AuthorRepository;

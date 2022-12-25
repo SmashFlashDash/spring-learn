@@ -1,7 +1,7 @@
 package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.book.BooksPageDto;
-import com.example.MyBookShopApp.data.services.BookService;
+import com.example.MyBookShopApp.data.book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Controller
@@ -38,27 +39,13 @@ public class BooksPageController {
     @GetMapping(value = "/books/recent/page", params = {"from","to","offset","limit"})
     @ResponseBody
     public BooksPageDto getNewBooksPage(
-            @RequestParam(name = "from", required = false) @DateTimeFormat(pattern="dd.MM.yyyy") Date from,
-            @RequestParam(name = "to", required = false) @DateTimeFormat(pattern="dd.MM.yyyy") Date to,
-//            @RequestParam(name = "from", required = false) String fromString,
-//            @RequestParam(name = "to", required = false) String toString,
+            @RequestParam(name = "from", required = false)
+            @Pattern(regexp="\\d\\d\\.\\d\\d\\.\\d\\d\\d\\d$", message="wrong format") @DateTimeFormat(pattern="dd.MM.yyyy")  Date from,
+            @RequestParam(name = "to", required = false)
+            @Pattern(regexp="\\d\\d\\.\\d\\d\\.\\d\\d\\d\\d$", message="wrong format") @DateTimeFormat(pattern="dd.MM.yyyy")  Date to,
             @RequestParam("offset") Integer offset,
             @RequestParam("limit") Integer limit) {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-//        dateFormat.setLenient(false);
-//        Date from;
-//        try {
-//            from = dateFormat.parse(fromString);
-//        } catch (Exception e){
-//            from = null;
-//        }
-//        Date to;
-//        try {
-//            to = dateFormat.parse(fromString);
-//        } catch (Exception e){
-//            to = null;
-//        }
-        // TODO: первый запрос со страницы возвращает limit = 20
+        // TODO: первый запрос со страницы возвращает limit = 20, должен 10
         if (from == null && to == null){
             return new BooksPageDto(bookService.getPageOfNewBooks(offset, limit).getContent());
         } else if (from != null && to != null){
@@ -73,24 +60,6 @@ public class BooksPageController {
     @ResponseBody
     public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
                                             @RequestParam("limit") Integer limit){
-//        Метод выводит книги по убыванию популярности — от самой большой популярности до самой маленькой.
-//        См. “Алгоритм определения популярности книг”.
-//        Книги, у которых популярность равна 0, можно выводить в произвольном порядке без какой-либо специальной сортировки.
-//        Параметры:
-//        offset — сдвиг от 0 для постраничного вывода
-//        limit — количество книг, которое надо вывести
-//        Формат ответа:
-//        {
-//	        ‘count’: 390,
-//	        ‘books’: [
-//            BOOK,]
-//        }
-//        Алгоритм определения популярности книг
-//        Популярность книги представляет собой неотрицательное число, которое можно рассчитать по следующей формуле:
-//        P = B + 0,7*C + 0,4*K,
-//        где B — количество пользователей, купивших книгу,
-//        C — количество пользователей, у которых книга находится в корзине, а
-//        K — количество пользователей, у которых книга отложена.
         return new BooksPageDto(bookService.getPageOfPopularBooks(offset, limit).getContent());
     }
 

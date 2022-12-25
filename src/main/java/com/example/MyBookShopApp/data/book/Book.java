@@ -60,6 +60,15 @@ public class Book {
     @ApiModelProperty("book title")
     private String title;
 
+    @Column(name = "stat_in_cart", columnDefinition = "INT NOT NULL")
+    private Integer statInCart;
+
+    @Column(name = "stat_bought", columnDefinition = "INT NOT NULL")
+    private Integer statBought;
+
+    @Column(name = "stat_postponed", columnDefinition = "INT NOT NULL")
+    private Integer statPostponed;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "book2author",
             joinColumns = {@JoinColumn(name = "bookId")},
@@ -136,6 +145,30 @@ public class Book {
 
     public void setBookReview(List<BookReviewEntity> bookReview) {
         this.bookReview = bookReview;
+    }
+
+    public Integer getStatInCart() {
+        return statInCart;
+    }
+
+    public void setStatInCart(Integer statInCart) {
+        this.statInCart = statInCart;
+    }
+
+    public Integer getStatBought() {
+        return statBought;
+    }
+
+    public void setStatBought(Integer statBought) {
+        this.statBought = statBought;
+    }
+
+    public Integer getStatPostponed() {
+        return statPostponed;
+    }
+
+    public void setStatPostponed(Integer statPostponed) {
+        this.statPostponed = statPostponed;
     }
 
     public Integer getId() {

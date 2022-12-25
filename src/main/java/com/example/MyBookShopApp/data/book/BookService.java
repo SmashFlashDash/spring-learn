@@ -1,4 +1,4 @@
-package com.example.MyBookShopApp.data.services;
+package com.example.MyBookShopApp.data.book;
 
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.book.BookRepository;
@@ -45,10 +45,9 @@ public class BookService {
 //    public List<Book> getBestsellers(){
 //        return bookRepository.getBestsellers();
 //    }
-//    public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit){
-//        return bookRepository.findBookByTitleContaining(searchWord,PageRequest.of(offset,limit));
-//    }
-
+    public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit){
+        return bookRepository.findBookByTitleContaining(searchWord,PageRequest.of(offset,limit));
+    }
     public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of(offset,limit);
         return bookRepository.findAll(nextPage);
@@ -57,10 +56,12 @@ public class BookService {
         return bookRepository.findAllByOrderByPubDateDesc(PageRequest.of(offset, limit));
 //        return bookRepository.findAll(PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "pubDate")));
     }
-    public Page<Book> getPageOfPopularBooks(Integer offset, Integer limit) {
+    public Page<Book> getPageOfBestsellersBooks(Integer offset, Integer limit) {
         return bookRepository.findBookByIsBestsellerEqualsOrderByPubDateDesc((short) 1, PageRequest.of(offset, limit));
     }
-
+    public Page<Book> getPageOfPopularBooks(Integer offset, Integer limit) {
+        return bookRepository.findAllByOrderByPopular(PageRequest.of(offset, limit));
+    }
     public Page<Book> getPageOfNewBooksDateFrom(Date from, Integer offset, Integer limit) {
         return bookRepository.findAllByPubDateAfterOrderByPubDateDesc(from, PageRequest.of(offset, limit));
     }

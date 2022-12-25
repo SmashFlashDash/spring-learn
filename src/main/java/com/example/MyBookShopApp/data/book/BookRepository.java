@@ -6,10 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
-import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
-
 //    List<Book> findBookByAuthor_Name(String name);
 //    @Query("from Book")
 //    List<Book> customFindAllBooks();
@@ -23,13 +21,15 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 //    List<Book> getBestsellers();
 //    @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books)", nativeQuery = true)
 //    List<Book> getBooksWithMaxDiscount();
-//
-//    Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
-    Page<Book> findAllByOrderByPubDateDesc(Pageable nextPage);
-//    @Query("from Book book WHERE book.is_bestseller = 1 ORDER BY book.pub_date DESC ")
+
+    Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
+
+    @Query("FROM Book b ORDER BY b.statBought + 0.7 * b.statInCart + 0.4 * b.statPostponed DESC")
+    Page<Book> findAllByOrderByPopular(Pageable nextPage);
+    // @Query("from Book book WHERE book.is_bestseller = 1 ORDER BY book.pub_date DESC ")
     Page<Book> findBookByIsBestsellerEqualsOrderByPubDateDesc(Short num, Pageable nextPage);
 
-
+    Page<Book> findAllByOrderByPubDateDesc(Pageable nextPage);
     Page<Book> findAllByPubDateAfterOrderByPubDateDesc(Date from, Pageable nextPage);
     Page<Book> findAllByPubDateBeforeOrderByPubDateDesc(Date to, Pageable nextPage);
     Page<Book> findAllByPubDateBetweenOrderByPubDateDesc(Date from, Date to, Pageable nextPage);
