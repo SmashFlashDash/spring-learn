@@ -5,6 +5,7 @@ import com.example.MyBookShopApp.data.book.file.FileDownloadEntity;
 import com.example.MyBookShopApp.data.book.review.BookReviewEntity;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
+import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.data.user.UserEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -86,6 +87,12 @@ public class Book {
             joinColumns = {@JoinColumn(name = "bookId")},
             inverseJoinColumns = {@JoinColumn(name = "userId")})
     private List<UserEntity> users;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "book2tag",
+            joinColumns = {@JoinColumn(name = "bookId")},
+            inverseJoinColumns = {@JoinColumn(name = "tagId")})
+    private List<TagEntity> tags;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "bookId")
@@ -169,6 +176,14 @@ public class Book {
 
     public void setStatPostponed(Integer statPostponed) {
         this.statPostponed = statPostponed;
+    }
+
+    public List<TagEntity> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<TagEntity> tags) {
+        this.tags = tags;
     }
 
     public Integer getId() {

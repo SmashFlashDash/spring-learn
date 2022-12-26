@@ -59,19 +59,6 @@
           </div>
           <div class="Cards Cards_refresh" >
             <div class="Card" th:each="book:${popularBooks}" th:insert="~{fragments/book_card_fragment ::bookFragment}"></div>
-<!--            <div class="Card" th:each="book:${popularBooks}">-->
-<!--              <div class="Card-picture"><a href="#">-->
-<!--                <img th:src="${book.image}" src="/assets/img/content/main/card.jpg" alt="card.jpg"/>-->
-<!--                <div class="Card-ribbon" th:if="${book.isBestseller == 1}">-->
-<!--                  <span class="Card-ribbonText">Бестселлер</span>-->
-<!--                </div>-->
-<!--                <div class="Card-sale"-->
-<!--                     th:if="${book.discount > 0}"-->
-<!--                     th:text="${book.discount*100/book.price} + '% скидка'">30% скидка&ndash;&gt;-->
-<!--                </div>-->
-<!--              </a>-->
-<!--              </div>-->
-<!--            </div>-->
             <div class="Cards-footer Cards-footer_center">
               <a class="btn btn_primary" href="#" data-refreshshow="popular" data-refreshoffset="0" data-refreshlimit="10">Показать еще</a>
             </div>
