@@ -24,6 +24,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
 
+    // TODO: find Books By tag
+
     @Query("FROM Book b ORDER BY b.statBought + 0.7 * b.statInCart + 0.4 * b.statPostponed DESC")
     Page<Book> findAllByOrderByPopular(Pageable nextPage);
     // @Query("from Book book WHERE book.is_bestseller = 1 ORDER BY book.pub_date DESC ")

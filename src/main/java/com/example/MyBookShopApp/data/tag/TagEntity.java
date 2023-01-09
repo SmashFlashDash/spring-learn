@@ -18,7 +18,7 @@ public class TagEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String description;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
     private List<Book> books;
 
     public List<Book> getBooks() {
