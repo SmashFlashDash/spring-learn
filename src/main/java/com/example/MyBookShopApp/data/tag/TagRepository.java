@@ -12,5 +12,5 @@ public interface TagRepository extends JpaRepository<TagEntity, Integer> {
     //         "ON tg.tag_id = tag.id ORDER BY book_count DESC, tag ASC;", nativeQuery = true)
     // HQL
     @Query("FROM TagEntity AS t ORDER BY size(t.books) DESC, t.tag ASC")
-    public List<TagEntity> findAllTagsSortedByBookCount();
+    List<TagEntity> findAllTagsSortedByBookCount();
 }

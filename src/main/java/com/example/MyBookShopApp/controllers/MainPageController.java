@@ -1,18 +1,14 @@
 package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.data.search.SearchWordDto;
 import com.example.MyBookShopApp.data.book.BookService;
 import com.example.MyBookShopApp.data.tag.TagEntity;
-import com.example.MyBookShopApp.data.tag.TagRepository;
 import com.example.MyBookShopApp.data.tag.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import javax.persistence.ManyToMany;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -42,7 +38,9 @@ public class MainPageController {
     }
     @ModelAttribute("tagsBooks")
     public List<TagEntity> tagsBooks(){
-        return tagService.getTagsSortedByBooksCount();
+        // @JsonIgnore в Entity или Jackson StackOverFlow Error из-за цикличного запроса
+        // или возвращать DTO
+        return tagService.findAllSortedByBooksCount();
     }
 
     // TODO: эксепшен при двигании слайдера

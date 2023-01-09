@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.data.tag;
 
 import com.example.MyBookShopApp.data.book.Book;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,6 +19,7 @@ public class TagEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String description;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
     private List<Book> books;
 

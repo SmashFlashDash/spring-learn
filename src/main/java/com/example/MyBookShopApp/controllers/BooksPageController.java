@@ -36,7 +36,8 @@ public class BooksPageController {
                                                 @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
     }
-    @GetMapping(value = "/books/recent/page", params = {"from","to","offset","limit"})
+
+    @GetMapping(value = "/books/recent/page")
     @ResponseBody
     public BooksPageDto getNewBooksPage(
             @RequestParam(name = "from", required = false)
