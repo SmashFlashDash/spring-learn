@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.book.BooksPageDto;
 import com.example.MyBookShopApp.data.book.BookService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.constraints.Pattern;
+import java.time.Instant;
 import java.util.Date;
 
 @Controller
@@ -37,6 +39,22 @@ public class BooksPageController {
         return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
     }
 
+    // TODO: при ресайзе страницы запрашивает этот метод а параметры ставит одни и те же из cript.min.js
+    // reloadDate();
+    // TODO: первый запрос со страницы возвращает limit = 20, должен 10
+    // прописан в thymeleaf на datePicker
+    //    if (!$this.hasClass('form-input_date_uninit')) {
+    //        $refreshoffset.data('refreshoffset', 0)
+    //        getData('/books/recent/page', {
+    //                from: $('[data-refreshfrom]').data('refreshfrom'),
+    //                to: $('[data-refreshto]').data('refreshto'),
+    //                offset: $this.data('refreshoffset'),
+    //                limit: $this.data('refreshlimit')
+    //                                        }, 'changedate');
+    // TODO: hide кнопки когда книги кончились
+    // посмотреть в thymelaf название кнопки и в js поискать
+    // или в thymeleaf
+    // TODO: косяк в запросе может вернуть книгу которая был показана несколько раз
     @GetMapping(value = "/books/recent/page")
     @ResponseBody
     public BooksPageDto getNewBooksPage(
@@ -46,7 +64,9 @@ public class BooksPageController {
             @Pattern(regexp="\\d\\d\\.\\d\\d\\.\\d\\d\\d\\d$", message="wrong format") @DateTimeFormat(pattern="dd.MM.yyyy")  Date to,
             @RequestParam("offset") Integer offset,
             @RequestParam("limit") Integer limit) {
-        // TODO: первый запрос со страницы возвращает limit = 20, должен 10
+        // надо задавать дату которая будет ставится в фильтр через thymelaf
+        // а в booksPageDto слать параметры
+        // или на старнице убрать изначальынй текст в датах
         if (from == null && to == null){
             return new BooksPageDto(bookService.getPageOfNewBooks(offset, limit).getContent());
         } else if (from != null && to != null){
@@ -80,10 +100,16 @@ public class BooksPageController {
         model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 10).getContent());
         return "/books/popular";
     }
+
+
     @RequestMapping("/books/recent")
     public String getNewBooks(Model model){
         model.addAttribute("active", "Recent");
-        model.addAttribute("newBooks", bookService.getPageOfNewBooks(0, 10).getContent());
+        // model.addAttribute("newBooks", bookService.getPageOfNewBooks(0, 10).getContent());
+        // в script.min.js  $this.datepicker().data('datepicker') запрашивает книги за последний месяц
+        // можно вычислть здесь Date и кидать в model и в script.min.js брать дату а не вычислять
+        model.addAttribute("newBooks", bookService.getPageOfNewBooksDateBetween(
+                new DateTime().minusMonths(1).toDate(), new Date(), 0, 10).getContent());
         return "/books/recent";
     }
 
