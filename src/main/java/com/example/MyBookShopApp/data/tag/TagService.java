@@ -12,7 +12,7 @@ public class TagService {
     public TagService(TagRepository tagRepository) {
         this.tagRepository = tagRepository;
     }
-    public List<TagEntity> getTagsSortedByBooksCount(){
+    public List<TagEntity> findAllSortedByBooksCount(){
         return tagRepository.findAllTagsSortedByBookCount();
     }
 }

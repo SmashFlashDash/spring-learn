@@ -88,10 +88,11 @@ public class Book {
             inverseJoinColumns = {@JoinColumn(name = "userId")})
     private List<UserEntity> users;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "book2tag",
-            joinColumns = {@JoinColumn(name = "bookId")},
-            inverseJoinColumns = {@JoinColumn(name = "tagId")})
+            joinColumns = @JoinColumn(name = "bookId"),
+            inverseJoinColumns = @JoinColumn(name = "tagId"))
     private List<TagEntity> tags;
 
     @OneToMany(fetch = FetchType.LAZY)
