@@ -39,22 +39,6 @@ public class BooksPageController {
         return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
     }
 
-    // TODO: при ресайзе страницы запрашивает этот метод а параметры ставит одни и те же из cript.min.js
-    // reloadDate();
-    // TODO: первый запрос со страницы возвращает limit = 20, должен 10
-    // прописан в thymeleaf на datePicker
-    //    if (!$this.hasClass('form-input_date_uninit')) {
-    //        $refreshoffset.data('refreshoffset', 0)
-    //        getData('/books/recent/page', {
-    //                from: $('[data-refreshfrom]').data('refreshfrom'),
-    //                to: $('[data-refreshto]').data('refreshto'),
-    //                offset: $this.data('refreshoffset'),
-    //                limit: $this.data('refreshlimit')
-    //                                        }, 'changedate');
-    // TODO: hide кнопки когда книги кончились
-    // посмотреть в thymelaf название кнопки и в js поискать
-    // или в thymeleaf
-    // TODO: косяк в запросе может вернуть книгу которая был показана несколько раз
     @GetMapping(value = "/books/recent/page")
     @ResponseBody
     public BooksPageDto getNewBooksPage(
@@ -64,9 +48,6 @@ public class BooksPageController {
             @Pattern(regexp="\\d\\d\\.\\d\\d\\.\\d\\d\\d\\d$", message="wrong format") @DateTimeFormat(pattern="dd.MM.yyyy")  Date to,
             @RequestParam("offset") Integer offset,
             @RequestParam("limit") Integer limit) {
-        // надо задавать дату которая будет ставится в фильтр через thymelaf
-        // а в booksPageDto слать параметры
-        // или на старнице убрать изначальынй текст в датах
         if (from == null && to == null){
             return new BooksPageDto(bookService.getPageOfNewBooks(offset, limit).getContent());
         } else if (from != null && to != null){
@@ -83,16 +64,6 @@ public class BooksPageController {
                                             @RequestParam("limit") Integer limit){
         return new BooksPageDto(bookService.getPageOfPopularBooks(offset, limit).getContent());
     }
-
-//    MainPageController
-//    Облако тегов технически представляет собой блок ссылок, а популярность тега визуализируется при
-//    помощи размера шрифта, рассчитанного по количеству книг, обладающих рассматриваемым тегом.
-//    Каждая ссылка в блоке ведёт на страницу /tags/index.html, в которой при помощи механизма пагинации
-//    осуществляется вывод книг, обладающих выбранным из облака тегом.
-//    Для реализации этой задачи вам понадобится хранить данные по тегам (список тегов) и осуществлять их
-//    мэппинг с данными из таблицы books. Далее, выполняя запрос на выборку книг с определённым тегом и
-//    анализируя результаты, вы сможете определять размер тега в облаке. Рендеринг облака тегов может
-//    быть осуществлён средствами Thymeleaf или JQuery на ваш выбор.
 
     @GetMapping("/books/popular")
     public String getPopularBooks(Model model){
