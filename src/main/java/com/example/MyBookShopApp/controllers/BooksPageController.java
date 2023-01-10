@@ -72,7 +72,6 @@ public class BooksPageController {
         return "/books/popular";
     }
 
-
     @RequestMapping("/books/recent")
     public String getNewBooks(Model model){
         model.addAttribute("active", "Recent");

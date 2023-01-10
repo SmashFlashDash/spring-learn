@@ -1,5 +1,8 @@
 package com.example.MyBookShopApp.data.tag;
 
+import com.example.MyBookShopApp.data.book.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,4 +16,6 @@ public interface TagRepository extends JpaRepository<TagEntity, Integer> {
     // HQL
     @Query("FROM TagEntity AS t ORDER BY size(t.books) DESC, t.tag ASC")
     List<TagEntity> findAllTagsSortedByBookCount();
+
+    TagEntity findByTag(String tag);
 }

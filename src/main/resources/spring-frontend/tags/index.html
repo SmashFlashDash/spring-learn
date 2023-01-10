@@ -19,7 +19,7 @@
   <!--meta( http-equiv="cache-control" content="no-cache")-->
   <!--meta( http-equiv="expires" content="0")-->
   <!--link(rel="preload" href="assets/css/extra.min.css?v=" + version as="style" crossorigin="anonymous")-->
-  <link href="favicon.ico" rel="shortcut icon">
+  <link href="/favicon.ico" rel="shortcut icon">
   <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
   <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
   <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
@@ -45,22 +45,25 @@
     <div class="wrap">
       <main class="Middle-main">
         <ul class="breadcrumbs">
-          <li class="breadcrumbs-item"><a href="/index.html">Главная</a>
+          <li class="breadcrumbs-item"><a href="/">Главная</a>
           </li>
-          <li class="breadcrumbs-item breadcrumbs-item_current"><span>Психологическая проза</span>
+          <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="${TagDto.getTag()}">Психологическая проза</span>
           </li>
         </ul>
         <div class="Section">
           <div class="Section-header">
-            <h1 class="Section-title">Психологическая проза
+            <h1 class="Section-title" th:text="${TagDto.getTag()}">Психологическая проза
             </h1>
-            <div class="Section-header-links"><a class="Section-header-link" href="/index.html#tags">Все тэги</a>
+            <div class="Section-header-links"><a class="Section-header-link" href="/#tags">Все тэги</a>
             </div>
           </div>
           <div class="Cards Cards_refresh">
-            <div class="Card" th:each="book:${newBooks}" th:insert="~{fragments/book_card_fragment ::bookFragment}"></div>
+            <div class="Card" th:each="book:${tagBooks}" th:insert="~{fragments/book_card_fragment ::bookFragment}"></div>
             <div class="Cards-footer Cards-footer_center">
-              <a class="btn btn_primary" href="#" data-refreshshow="tag" data-refreshoffset="0" data-refreshlimit="10" data-refreshid="10">Показать еще</a>
+              <a class="btn btn_primary" href="#"
+                 th:attr="data-refreshquery=${TagDto.getTag()}"
+
+                 data-refreshshow="tag" data-refreshoffset="0" data-refreshlimit="10">Показать еще</a>
             </div>
           </div>
         </div>

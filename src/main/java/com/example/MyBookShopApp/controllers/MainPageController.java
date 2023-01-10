@@ -11,6 +11,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
+// TODO: в следующие адреса запрос приходит два раза второй в dto favicon.ico
+//@GetMapping("/search/{searchWord}")   SearchPageController
+//@GetMapping(value = {"/tags/{tagWord}"})  TagPageController
+// потому что такая ссылка в каждом html
+//<link href="favicon.ico" rel="shortcut icon">
+// заменить href="favicon.ico" на th:href="@{favicon.ico}"  href="/favicon.ico"
+// TODO: в bookService не лучший запрос через TagService
+//public Page<Book> getPageOfBooksByTag
+
 @Controller
 public class MainPageController {
     private final BookService bookService;
@@ -42,14 +51,7 @@ public class MainPageController {
         // или возвращать DTO
         return tagService.findAllSortedByBooksCount();
     }
-    // TODO: заменить href в 
-//    Задание 2.3. Реализация списка книг по тегам
-//    Что нужно сделать
-//    На главной странице в нижней части располагается облако тегов, размер шрифта которых зависит от количества
-//    книг: чем больше книг отмечено тегом, тем крупнее размер шрифта. Вы можете кликнуть на интересующий вас
-//    тег и посмотреть список всех книг, им отмеченных.
-//    Реализуйте необходимую логику и структуры для работы этого раздела, включая вывод списка книг по выбранному
-//    тегу и само облако тегов. Кроме того, не забудьте о постраничном выводе контента в этом разделе.
+
 
     @GetMapping("/")
     public String mainPage() {

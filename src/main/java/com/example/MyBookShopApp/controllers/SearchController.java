@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Collections;
+
 @Controller
 public class SearchController {
     private final BookService bookService;
@@ -27,12 +29,17 @@ public class SearchController {
         return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
     }
 
-    @GetMapping(value = {"/search", "/search/{searchWord}"})
-    public String getSearchResults(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
-                                   Model model) {
+    @GetMapping("/search/{searchWord}")
+    public String getSearchResults(@PathVariable(value = "searchWord") SearchWordDto searchWordDto, Model model) {
         model.addAttribute("searchWordDto", searchWordDto);
-        model.addAttribute("searchResults",
-                bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5).getContent());
+        model.addAttribute("searchResults", bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5).getContent());
+        return "/search/index";
+    }
+
+    @GetMapping("/search")
+    public String getSearchResultsEmpty(Model model) {
+        model.addAttribute("searchWordDto", new SearchWordDto(""));
+        model.addAttribute("searchResults", Collections.emptyList());
         return "/search/index";
     }
 
